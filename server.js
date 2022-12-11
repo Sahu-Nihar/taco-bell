@@ -7,7 +7,7 @@ const { API_VERSION } = require('./config/Constants');
 const sequelize = require('./db/db');
 
 const userRouter = require('./routes/user');
-// const cartRouter = require('./routes/cart');
+const cartRouter = require('./routes/cart');
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(API_VERSION, userRouter);
-// app.use(API_VERSION, cartRouter);
+app.use(API_VERSION, cartRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is up and running on port ${PORT}`)

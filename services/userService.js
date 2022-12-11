@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const User = require('../models/t_user.model');
 const comparePassword = require('../utils/comparePassword');
+const decodeJWT = require('../utils/decodeJWT');
 const generateHash = require('../utils/generateHash');
 const issueJWT = require('../utils/issueJWT');
 const validateSignIn = require('../validation/validateSignIn');
@@ -183,7 +184,38 @@ const userSignInService = async (userData) => {
     }
 }
 
+const validateLoggedInUser = async (authorizationToken) => {
+    try {
+        let loggedInUserId = decodeJWT(authorizationToken);
+
+        if (!loggedInUserId) return {
+            success: false,
+            message: 'Invalid authorization token!'
+        };
+
+        let userDetails = await User.findByPk(loggedInUserId);
+
+        if (!userDetails) return {
+            success: false,
+            message: 'User not found!'
+        };
+
+        return {
+            success: true,
+            message: 'User has been authenticated!',
+            data: loggedInUserId
+        };
+    }
+    catch (error) {
+        return {
+            success: false,
+            message: error
+        }
+    }
+}
+
 module.exports = {
     useSignUpService,
-    userSignInService
+    userSignInService,
+    validateLoggedInUser
 }
