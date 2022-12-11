@@ -14,7 +14,8 @@ const ErrorMessage = {
         Error_3: "Please enter the required values: 'Name', 'Price'",
         Error_4: "Price should be a real number!",
         Error_5: "Could not add to the cart!",
-        Error_6: "No cart items found!"
+        Error_6: "No cart items found!",
+        Error_7: "Sorry could not delete the item!"
     }
 };
 

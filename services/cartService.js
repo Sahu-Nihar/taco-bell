@@ -34,7 +34,8 @@ const getCartDetails = async (userId) => {
         const cartDetails = await Cart.findAll({
             where: {
                 userId: userId
-            }
+            },
+            order: [['createdAt', 'DESC']]
         });
 
         if (!cartDetails) return {
@@ -67,6 +68,38 @@ const getCartDetails = async (userId) => {
         };
     };
 };
+
+const deleteCartDetails = async (userId, cartId) => {
+    try {
+        const deleteItem = await Cart.destroy({
+            where: {
+                [Op.and]: [
+                    { id: cartId },
+                    { userId: userId }
+                ]
+            },
+            returning: true
+        });
+
+        console.log('deleteItem:', deleteItem);
+
+        if (!deleteItem) return {
+            success: false,
+            message: 'Sorry could not delete the item!'
+        }
+
+        return {
+            success: true,
+            message: 'Item deleted from cart!'
+        }
+    }
+    catch (error) {
+        return {
+            success: false,
+            message: error
+        }
+    }
+}
 
 const addToCartService = async (authorizationToken, cartJSON) => {
     try {
@@ -143,7 +176,29 @@ const viewCartService = async (authorizationToken) => {
 
         const cartDetails = await getCartDetails(loggedInUserId);
 
+        console.log('cart details:', cartDetails);
+
         return cartDetails;
+    }
+    catch (error) {
+        return {
+            success: false,
+            message: error
+        };
+    };
+};
+
+const deleteCartService = async (authorizationToken, cartId) => {
+    try {
+        const loggedInUser = await validateLoggedInUser(authorizationToken);
+
+        if (!loggedInUser.success) return loggedInUser;
+
+        const loggedInUserId = loggedInUser.data;
+
+        const deleteCartItem = await deleteCartDetails(loggedInUserId, cartId);
+
+        return deleteCartItem;
     }
     catch (error) {
         return {
@@ -153,8 +208,8 @@ const viewCartService = async (authorizationToken) => {
     }
 }
 
-
 module.exports = {
     addToCartService,
-    viewCartService
+    viewCartService,
+    deleteCartService
 }
