@@ -29,6 +29,45 @@ const bulkUpload = async (verifiedArr) => {
     }
 }
 
+const getCartDetails = async (userId) => {
+    try {
+        const cartDetails = await Cart.findAll({
+            where: {
+                userId: userId
+            }
+        });
+
+        if (!cartDetails) return {
+            success: false,
+            message: 'No cart items found!'
+        };
+
+        const cartArr = cartDetails.map(cart => cart.dataValues);
+        let totalPrice = 0;
+
+        cartArr.forEach(element => {
+            totalPrice += element.price
+        });
+
+        console.log('Total Price:', totalPrice);
+
+        return {
+            success: true,
+            message: 'Cart item found!',
+            data: {
+                items: cartArr,
+                totalPrice: totalPrice
+            }
+        };
+    }
+    catch (error) {
+        return {
+            success: false,
+            message: error
+        };
+    };
+};
+
 const addToCartService = async (authorizationToken, cartJSON) => {
     try {
         let loggedInUser = await validateLoggedInUser(authorizationToken);
@@ -94,7 +133,28 @@ const addToCartService = async (authorizationToken, cartJSON) => {
     };
 };
 
+const viewCartService = async (authorizationToken) => {
+    try {
+        const loggedInUser = await validateLoggedInUser(authorizationToken);
+
+        if (!loggedInUser.success) return loggedInUser;
+
+        const loggedInUserId = loggedInUser.data;
+
+        const cartDetails = await getCartDetails(loggedInUserId);
+
+        return cartDetails;
+    }
+    catch (error) {
+        return {
+            success: false,
+            message: error
+        }
+    }
+}
+
 
 module.exports = {
-    addToCartService
+    addToCartService,
+    viewCartService
 }
