@@ -96,7 +96,7 @@ const addToCartService = async (authorizationToken, cartJSON) => {
                 let duplicateIndex = verifiedArr.findIndex(item => item.name == uploadObject.name);
                 if (duplicateIndex > -1) {
                     verifiedArr[duplicateIndex].quantity += 1;
-                    verifiedArr[duplicateIndex].price *= verifiedArr[duplicateIndex].quantity;
+                    verifiedArr[duplicateIndex].price = verifiedArr[duplicateIndex].quantity * uploadObject.price;
                 }
                 else {
                     verifiedArr = [...verifiedArr, uploadObject];
