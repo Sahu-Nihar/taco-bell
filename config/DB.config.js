@@ -4,9 +4,9 @@ module.exports = {
     PASSWORD_LOCAL: "Password_123_!",
     DB_LOCAL: "tacobell",
 
-    HOST_STAGE: "",
-    USER_STAGE: "",
-    PASSWORD_STAGE: "",
+    HOST_STAGE: "52.54.44.196",
+    USER_STAGE: "trox",
+    PASSWORD_STAGE: "Password_123_!",
     DB_STAGE: "tacobell",
 
     dialect: "mysql",
