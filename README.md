@@ -14,7 +14,7 @@ To run the server run the following command in your terminal:
 
 ## API END POINTS:
 
-    - SIGN-UP: [http://18.225.10.147:4000/api/v1/user/signUp](http://18.225.10.147:4000/api/v1/user/signUp)
+    - SIGN-UP: http://18.225.10.147:4000/api/v1/user/signUp
         - Request payload: {
             "name": <your_name>,
             "emailId": <your_email_address>
@@ -31,7 +31,7 @@ To run the server run the following command in your terminal:
             }
         }
 
-    - SIGN-IN: [http://18.225.10.147:4000/api/v1/user/signIn](http://18.225.10.147:4000/api/v1/user/signIn)
+    - SIGN-IN: http://18.225.10.147:4000/api/v1/user/signIn
         - Request payload: {
             "emailId": <registered_email_id>,
             "password": <your_password>
@@ -47,7 +47,7 @@ To run the server run the following command in your terminal:
             }
         }
 
-    - ADD-TO-CART: [http://18.225.10.147:4000/api/v1/cart/add](http://18.225.10.147:4000/api/v1/cart/add)
+    - ADD-TO-CART: http://18.225.10.147:4000/api/v1/cart/add
         - Request payload: [
             {
                 "name": <product_name>,
@@ -71,7 +71,7 @@ To run the server run the following command in your terminal:
             }
         }
 
-    - VIEW_CART: [http://18.225.10.147:4000/api/v1/cart/view](http://18.225.10.147:4000/api/v1/cart/view)
+    - VIEW_CART: http://18.225.10.147:4000/api/v1/cart/view
         - Request: authorization_token,
         - Response payload: {
             success: true,
@@ -82,7 +82,7 @@ To run the server run the following command in your terminal:
             }
         }
 
-    - DELETE CART: [http://18.225.10.147:4000/api/v1/cart/delete/:id](http://18.225.10.147:4000/api/v1/cart/delete/:id)
+    - DELETE CART: http://18.225.10.147:4000/api/v1/cart/delete/:id
         - Request: authorization_token, id: cart_item_id
         - Response payload: {
             success: true,
